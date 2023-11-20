@@ -1,12 +1,20 @@
  const tileContainer = document.querySelector(".tiles");//defines constant for tile container
- const colours = ["aqua", "aquamarine", "gold", "blue", "crimson", "dodgerblue", "greenyellow", "teal"];//defines constants for colors
+ const colours = ["lavender", "orange", "gold", "blue", "crimson", "deeppink", "greenyellow", "purple"];//defines constants for colors
  const coloursPicklist = [...colours, ...colours];//creates an array containing two elements beings a coppy of the array colors
  const tileCount = coloursPicklist.length;//how many tiles there are
+const restartButton = document.getElementById("restartButton");//defines constant for restart button
+ 
+
+
 
  //game state
  let revealedCount = 0;//sets number of revealed tiles be zero
  let activeTile = null;//the tile that the user has just flipped is null while looking for the next tile
  let awaitingEndOfMove = false;//when true waiting for the player to make their move
+
+ restartButton.addEventListener("click", () => {
+    resetGame();
+});
 
 function buildTile(colour){//funtion to make a tile 
     const element = document.createElement("div");//creates a div
@@ -14,6 +22,9 @@ function buildTile(colour){//funtion to make a tile
     element.classList.add("tile");//class list allows you tointeract wiht a list of classes on an element. .add adds the tile element 
     element.setAttribute("data-colour", colour);//sets data-colour attribute of the element to be the colour that we pass
     element.setAttribute("data-revealed", "false");//when a tile is first created it is not revealed
+
+
+   
 
     element.addEventListener("click", () =>{//event happens when tile is clicked
         const revealed = element.getAttribute("data-revealed");
@@ -43,7 +54,7 @@ function buildTile(colour){//funtion to make a tile
             revealedCount += 2;//adds 2 to number of revealed counters
 
             if(revealedCount === tileCount){//win conditions
-                alert("You win! Refresh to play again");
+                alert("You win!");
             }
 
             return;
@@ -65,6 +76,7 @@ function buildTile(colour){//funtion to make a tile
     return element;
 }
 
+
  //build up tile
  for(let i = 0; i < tileCount; i++){//runs loop 16 times
     const randomIndex = Math.floor(Math.random() * coloursPicklist.length);//selects a random value from the array of colors picklist 0-15
@@ -75,3 +87,37 @@ function buildTile(colour){//funtion to make a tile
     coloursPicklist.splice(randomIndex, 1);//removes a colour once chosen
     tileContainer.appendChild(tile);//appends element of tile to the body in html
  }
+
+
+
+//  build restart button
+ function resetGame() {
+    // Reset game state variables to the original values
+    revealedCount = 0;
+    activeTile = null;
+    awaitingEndOfMove = false;
+
+    // Remove all tiles from the tile container
+    while (tileContainer.firstChild) {
+        tileContainer.removeChild(tileContainer.firstChild);
+    }
+
+    const coloursPicklist = [...colours, ...colours];//adds the colours back to the array
+    // Rebuild tiles (similar to the initial setup)
+    for(let i = 0; i < tileCount; i++){//runs loop 16 times
+        const randomIndex = Math.floor(Math.random() * coloursPicklist.length);//selects a random value from the array of colors picklist 0-15
+        const colour = coloursPicklist[randomIndex];
+        const tile = buildTile(colour);//assigns colour to a tile
+    
+    
+        coloursPicklist.splice(randomIndex, 1);//removes a colour once chosen
+        tileContainer.appendChild(tile);//appends element of tile to the body in html
+     }
+
+     const tiles = document.querySelectorAll(".tile");
+     tiles.forEach(tile => {
+         tile.setAttribute("data-revealed", "false");
+         tile.style.backgroundColor = null; // Reset background color
+     });
+     
+}
