@@ -1,20 +1,42 @@
 body {
     background: #111111;
-    margin: 0;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     height: 100vh;/* This ensures that the container takes up the full height of the viewport */
+}
+
+h1{
+    text-align: center;
+    margin-top: 10px;
 }
 
 .tiles {
-    margin: 48px auto;  /**/
+    margin: 20px auto;  
     width: max-content;
     display: grid;
-    grid-template-columns: repeat(4, 100px);
-    gap: 16px;
+    grid-template-columns: repeat(4, 80px);
+    gap: 10px;
 
 }
 
 .tile{
-    height: 100px;
+    height: 80px;
     background: #111111;
     border: 5px solid #444444;
     cursor: pointer;
+}
+
+.title{
+    color:  white;
+}
+
+#restartButton{
+    place-items: center;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#restartButton:hover{
+    background-color: grey;/*button turns grey when curser is on top*/
 }
